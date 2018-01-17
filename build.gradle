@@ -1,0 +1,19 @@
+task hello {
+ println "hello: Hello Gradle!"
+ doLast{
+	println "hello.doLast: Hello Gradle!"
+ }
+ doFirst{
+	println "hello.doFirst: Hello Gradle!"
+ }
+}
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+task backupFiles(type:Copy) {
+  from '.'
+  into 'backup'
+  include '*.md','build.gradle'
+  String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"))
+  rename { String fileName -> fileName.concat('.').concat(now).concat('.').concat('bk') }  
+}
