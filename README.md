@@ -57,6 +57,7 @@ import java.time.format.DateTimeFormatter
 
 // Backup root/*.md and root/build.gradle to backup/
 // Append now datetime pattern to each backuped file
+// Note: The root path is based on the directory of build.gradle
 task backupFiles(type:Copy) {
   from '.'
   into 'backup'
@@ -65,42 +66,104 @@ task backupFiles(type:Copy) {
   rename { String fileName -> fileName.concat('.').concat(now).concat('.').concat('bk') }  
 }
 ```
-* dependOn
+* gradle build v.s. gradle task[*]
 ```groovy
 // build.gardle
 task task1 {
+println 'task1'
+doLast { println 'task1.doLast'}
+}
+task task2 {
+println 'task2'
+doLast { println 'task2.doLast'}
+}
+task task3 {
+println 'task3'
+doLast { println 'task3.doLast'}
+}
+==============
+// gradle build
+> Configure project :
+task1
+task2
+task3
+
+> Task :buildEnvironment
+==============
+// gradle task2
+> Configure project :
+task1
+task2
+task3
+
+> Task :task2
+task2.doLast
+```
+* dependsOn
+``` groovy
+task task1 {
+  doFirst { println 'task1.doFirst'}
   println 'task1'
   doLast { println 'task1.doLast'}
 }
-task task2 {
+task task2(dependsOn: task1) {
+  doFirst { println 'task2.doFirst'}
   println 'task2'
   doLast { println 'task2.doLast'}
 }
 task task3 {
+  dependsOn task2
+  doFirst { println 'task3.doFirst'}
   println 'task3'
   doLast { println 'task3.doLast'}
 }
+======================
+>gradle task1
+
+> Configure project :
+task1
+task2
+task3
+
+> Task :task1
+task1.doFirst
+task1.doLast
+======================
+>gradle task2
+
+> Configure project :
+task1
+task2
+task3
+
+> Task :task1
+task1.doFirst
+task1.doLast
+
+> Task :task2
+task2.doFirst
+task2.doLast
+======================
+>gradle task3
+
+> Configure project :
+task1
+task2
+task3
+
+> Task :task1
+task1.doFirst
+task1.doLast
+
+> Task :task2
+task2.doFirst
+task2.doLast
+
+> Task :task3
+task3.doFirst
+task3.doLast
 ```
 
-    * gradle build
-  ```text
-  > Configure project :
-  task1
-  task2
-  task3
-
-  > Task :buildEnvironment
-  ```
-  * gradle task2
-  ```
-  > Configure project :
-  task1
-  task2
-  task3
-
-  > Task :task2
-  task2.doLast
-  ```
 ----------------------------
 ## References:
 1. [Gradle学习系列之一——Gradle快速入门](https://www.cnblogs.com/davenkin/p/gradle-learning-1.html)
