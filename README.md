@@ -65,7 +65,42 @@ task backupFiles(type:Copy) {
   rename { String fileName -> fileName.concat('.').concat(now).concat('.').concat('bk') }  
 }
 ```
-* ​
+* dependOn
+```groovy
+// build.gardle
+task task1 {
+  println 'task1'
+  doLast { println 'task1.doLast'}
+}
+task task2 {
+  println 'task2'
+  doLast { println 'task2.doLast'}
+}
+task task3 {
+  println 'task3'
+  doLast { println 'task3.doLast'}
+}
+```
+
+    * gradle build
+  ```text
+  > Configure project :
+  task1
+  task2
+  task3
+
+  > Task :buildEnvironment
+  ```
+  * gradle task2
+  ```
+  > Configure project :
+  task1
+  task2
+  task3
+
+  > Task :task2
+  task2.doLast
+  ```
 ----------------------------
 ## References:
 1. [Gradle学习系列之一——Gradle快速入门](https://www.cnblogs.com/davenkin/p/gradle-learning-1.html)
