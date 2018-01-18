@@ -32,16 +32,38 @@
     }
     =================
     // gradle c
-    // Note: This is a predefined task for Gradle
+    // Note: This is a predefined task for Gradle(use [gradle tasks --all] to list)
     > Task :components
     =================
-    // gradle copy
+    // gradle cop
     > Task :copyFile
     > copyFile.doLast
     =================
     // gradle dF
     > Task :deleteFile
     > deleteFile.doLast
+    ```
+  * 執行指定的 gradle 檔案：
+    ```groovy
+    // sub/sub1.gradle
+    task deleteFile {
+      doLast { println 'sub1: deleteFile.doLast'}
+    }
+    
+    // gradle -b sub/sub1.gradle dF
+    > Task :deleteFile
+    sub1: deleteFile.doLast
+    ```
+    * 如果 sub 中的檔名是 build.gradle，則可用 -p 來指定執行檔所在目錄；若是 multi-project builds 也應用 -p 代替 -b：
+    ```groovy
+    // sub/build.gradle
+    task deleteFile {
+      doLast { println 'sub-build: deleteFile.doLast'}
+    }
+    
+    // gradle -p sub dF
+    > Task :deleteFile
+    sub-build: deleteFile.doLast
     ```
 ---
 ## doLast

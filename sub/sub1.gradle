@@ -1,0 +1,6 @@
+task copyFile {
+  doLast { println 'sub1: copyFile.doLast'}
+}
+task deleteFile {
+  doLast { println 'sub1: deleteFile.doLast'}
+}

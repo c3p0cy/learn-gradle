@@ -1,0 +1,6 @@
+task copyFile {
+  doLast { println 'sub-build: copyFile.doLast'}
+}
+task deleteFile {
+  doLast { println 'sub-build: deleteFile.doLast'}
+}
