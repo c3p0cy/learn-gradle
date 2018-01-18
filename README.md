@@ -13,7 +13,8 @@
     * 執行方式： 在該檔目錄下使用 gradle <指令>
   * Gradle 並不會按 build.gradle 的內容順序執行，而是分為兩個階段：
     1. 配置階段：讀取 build.gradle 的所有內容來設定 Project 和 Task 等，如設置 Project 的 Property，處理 Task 之間的依賴關係等。
-    2. 執行階段：可以從 [gradle build](#gradle_build) 和 [dependsOn](#dependsOn) 中看到執行結果有 Configure project 和 Task: XXXX
+    2. 執行階段
+    * 可以從 [gradle build](#gradle_build) 和 [dependsOn](#dependsOn) 中看到執行結果有 Configure project 和 Task: XXXX
 
 * 基本指令：
   * gradle
@@ -74,20 +75,20 @@ task backupFiles(type:Copy) {
 }
 ```
 ---
-## <a name="gradle_build"></a>gradle build v.s. gradle task[*]
+## <a name="gradle_build"></a>gradle build v.s. gradle [task name]
 ```groovy
 // build.gardle
 task task1 {
-println 'task1'
-doLast { println 'task1.doLast'}
+  println 'task1'
+  doLast { println 'task1.doLast'}
 }
 task task2 {
-println 'task2'
-doLast { println 'task2.doLast'}
+  println 'task2'
+  doLast { println 'task2.doLast'}
 }
 task task3 {
-println 'task3'
-doLast { println 'task3.doLast'}
+  println 'task3'
+  doLast { println 'task3.doLast'}
 }
 ==============
 // gradle build
