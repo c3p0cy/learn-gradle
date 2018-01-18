@@ -20,6 +20,29 @@
   * gradle
   * gradle tasks --all: 列出所有 Tasks
   * gradle properties: 列出所有 Property
+  * gradle [taskA]: 執行 taskA
+    * gradle [taskA] -x [taskB]: 執行 taskA 但排除 taskB
+    * 執行 [task] 只要輸入名稱到可識別的長度即可，例如只有 task_copy, task_delete 兩個 tasks，只要輸入 gradle task_c 即可執行 task_copy；也可用 camel case 縮寫
+    ```groovy
+    task copyFile {
+    doLast { println 'copyFile.doLast'}
+    }
+    task deleteFile {
+    doLast { println 'deleteFile.doLast'}
+    }
+    =================
+    // gradle c
+    // Note: This is a predefined task for Gradle
+    > Task :components
+    =================
+    // gradle copy
+    > Task :copyFile
+    > copyFile.doLast
+    =================
+    // gradle dF
+    > Task :deleteFile
+    > deleteFile.doLast
+    ```
 ---
 ## doLast
 ```groovy
@@ -177,4 +200,6 @@ task3.doLast
 ## 
 ---
 ##  References:
-1. [Gradle学习系列之一——Gradle快速入门](https://www.cnblogs.com/davenkin/p/gradle-learning-1.html)
+1. [Gradle User Guide - 4.4.1](https://docs.gradle.org/4.4.1/userguide/userguide.html)
+2. [Gradle学习系列之一——Gradle快速入门](https://www.cnblogs.com/davenkin/p/gradle-learning-1.html)
+

@@ -1,16 +1,6 @@
-task task1 {
-  doFirst { println 'task1.doFirst'}
-  println 'task1'
-  doLast { println 'task1.doLast'}
+task copyFile {
+  doLast { println 'copyFile.doLast'}
 }
-task task2(dependsOn: task1) {
-  doFirst { println 'task2.doFirst'}
-  println 'task2'
-  doLast { println 'task2.doLast'}
-}
-task task3 {
-  dependsOn task2
-  doFirst { println 'task3.doFirst'}
-  println 'task3'
-  doLast { println 'task3.doLast'}
+task deleteFile {
+  doLast { println 'deleteFile.doLast'}
 }
