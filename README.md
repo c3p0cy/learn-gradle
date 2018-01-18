@@ -11,11 +11,16 @@
     * Plugin: 提供特定功能的外掛，該功能要麼是向 Project 中添加不同的 Task，要麼向 Project中添加用於配置的 Property。
   * 預設的專案設定檔：build.gradle
     * 執行方式： 在該檔目錄下使用 gradle <指令>
+  * Gradle 並不會按 build.gradle 的內容順序執行，而是分為兩個階段：
+    1. 配置階段：讀取 build.gradle 的所有內容來設定 Project 和 Task 等，如設置 Project 的 Property，處理 Task 之間的依賴關係等。
+    2. 執行階段：可以從 [gradle build](#gradle_build) 和 [dependsOn](#dependsOn) 中看到執行結果有 Configure project 和 Task: XXXX
+
 * 基本指令：
   * gradle
-  * gradle tasks: 列出所有 Tasks
+  * gradle tasks --all: 列出所有 Tasks
   * gradle properties: 列出所有 Property
-* doLast
+---
+## doLast
 ```groovy
 task hello << { // Deprecated in Gradle 5.0, just use doLast{} to replace it.
    println "Hello Gradle!"
@@ -30,7 +35,8 @@ task hello {
 ```
   * 「<<」表示向 helloWorld 中加入執行程式碼——其實就是 groovy。
   * 執行 Task：gradle hello
-* doLast vs doFirst
+---
+## doLast vs doFirst
 ```groovy
 task hello {
  println "hello: Hello Gradle!"
@@ -50,7 +56,8 @@ hello: Hello Gradle!
 hello.doFirst: Hello Gradle!
 hello.doLast: Hello Gradle!
 ```
-* copy
+---
+## copy
 ```groovy
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -66,7 +73,8 @@ task backupFiles(type:Copy) {
   rename { String fileName -> fileName.concat('.').concat(now).concat('.').concat('bk') }  
 }
 ```
-* gradle build v.s. gradle task[*]
+---
+## <a name="gradle_build"></a>gradle build v.s. gradle task[*]
 ```groovy
 // build.gardle
 task task1 {
@@ -99,7 +107,8 @@ task3
 > Task :task2
 task2.doLast
 ```
-* dependsOn
+---
+## <a name="dependsOn"></a>dependsOn
 ``` groovy
 task task1 {
   doFirst { println 'task1.doFirst'}
@@ -163,7 +172,8 @@ task2.doLast
 task3.doFirst
 task3.doLast
 ```
-
-----------------------------
-## References:
+---
+## 
+---
+##  References:
 1. [Gradle学习系列之一——Gradle快速入门](https://www.cnblogs.com/davenkin/p/gradle-learning-1.html)
